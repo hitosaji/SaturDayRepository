@@ -1,5 +1,6 @@
 #include"MoleState1.h"
 #include"Mole1.h"
+#include"Game1.h"
 #include"Dxlib.h"
 
 HiddenState g_HiddenState;
@@ -7,33 +8,33 @@ VisibleState g_VisbleState;
 HitState g_HitState;
 
 //=====================================
-//Hidden(éè¡¨ç¤º)
+//Hidden(”ñ•\¦)
 //=====================================
-//æ›´æ–°
+//XV
 void HiddenState::Update(Mole& mole, float dt)
 {
-	//æ™‚é–“çµŒé
+	//ŠÔŒo‰ß
 	mole.timer += dt;
-	//1ç§’çµŒéã—ãŸã‚‰
+	//1•bŒo‰ß‚µ‚½‚ç
 	if (mole.timer >= 1.0f)
 	{
 		mole.x = GetRand(700 - 10) + 10;
 		mole.y = GetRand(500 - 10) + 10;
-		//çŠ¶æ…‹ã‚’è¡¨ç¤ºã«åˆ‡ã‚Šæ›¿ãˆã‚‹
+		//ó‘Ô‚ğ•\¦‚ÉØ‚è‘Ö‚¦‚é
 		mole.ChangeState(&g_VisbleState);
 	}
 }
 
-//æç”»
-void HiddenState::Draw(Mole&, int, int) {}
+//•`‰æ
+void HiddenState::Draw(Mole&, int, int,int) {}
 
-//ã‚¯ãƒªãƒƒã‚¯
+//ƒNƒŠƒbƒN
 bool HiddenState::OnClick(Mole&, int, int) { return false; }
 
 //=====================================
-//Visible(è¡¨ç¤º)
+//Visible(•\¦)
 //=====================================
-//æ›´æ–°
+//XV
 void VisibleState::Update(Mole& mole, float dt)
 {
 	mole.timer += dt;
@@ -42,29 +43,39 @@ void VisibleState::Update(Mole& mole, float dt)
 		mole.ChangeState(&g_HiddenState);
 	}
 }
-//æç”»
-void VisibleState::Draw(Mole& mole, int normalIng, int)
+//•`‰æ
+void VisibleState::Draw(Mole& mole,int normalImg,int, int throughImg)
 {
-	DrawExtendGraph((int)mole.x, (int)mole.y,
-		(int)mole.x + 75, (int)mole.y + 75,
-		normalIng, TRUE);
+	if (mole.timer < 1.0f)
+	{
+		DrawExtendGraph((int)mole.x, (int)mole.y,
+			(int)mole.x + 75, (int)mole.y + 75,
+			normalImg, TRUE);
+	}
+	else
+	{
+		DrawExtendGraph((int)mole.x, (int)mole.y,
+			(int)mole.x + 75, (int)mole.y + 75,
+			throughImg, TRUE);
+	}
 }
 
-//ã‚¯ãƒªãƒƒã‚¯
+//ƒNƒŠƒbƒN
 bool VisibleState::OnClick(Mole& mole, int mx, int my)
 {
-	if (mx >= mole.x && mx <= mole.x + 75 &&
-		my >= mole.y && my <= mole.x + 75)
-	{
-		mole.ChangeState(&g_HitState);
-	}
-	return false;
+		if (mx >= mole.x && mx <= mole.x + 75 &&
+			my >= mole.y && my <= mole.y + 75)
+		{
+			mole.ChangeState(&g_HitState);
+			return true;
+		}
+		return false;
 }
 
 //=====================================
-//Hit(å©ã‹ã‚ŒãŸ)
+//Hit(’@‚©‚ê‚½)
 //=====================================
-//æ›´æ–°
+//XV
 void HitState::Update(Mole& mole, float dt)
 {
 	mole.timer += dt;
@@ -74,12 +85,12 @@ void HitState::Update(Mole& mole, float dt)
 
 	}
 }
-//æç”»
-void HitState::Draw(Mole& mole, int, int hitImage)
+//•`‰æ
+void HitState::Draw(Mole& mole, int, int hitImage,int )
 {
 	DrawExtendGraph((int)mole.x, (int)mole.y,
 		(int)mole.x + 75, (int)mole.y + 75,
 		hitImage, TRUE);
 }
-//ã‚¯ãƒªãƒƒã‚¯
+//ƒNƒŠƒbƒN
 bool HitState::OnClick(Mole&, int mx, int my) { return false; }

@@ -10,7 +10,7 @@ Mole::Mole()
 }
 
 //=====================================
-//æ›´æ–°
+//XV
 //=====================================
 void Mole::Update(float dt)
 {
@@ -18,15 +18,15 @@ void Mole::Update(float dt)
 }
 
 //=====================================
-//æç”»
+//•`‰æ
 //=====================================
 void Mole::Draw(int normalImg, int hitImage,int throughImg)
 {
-	state->Draw(*this, normalImg, hitImage);
+	state->Draw(*this, normalImg, hitImage,throughImg);
 }
 
 //=====================================
-//ãƒ’ãƒƒãƒˆ
+//ƒqƒbƒg
 //=====================================
 bool Mole::Ishit(int mx, int my)
 {
@@ -34,7 +34,7 @@ bool Mole::Ishit(int mx, int my)
 }
 
 //=====================================
-//çŠ¶æ…‹å¤‰åŒ–
+//ó‘Ô•Ï‰»
 //=====================================
 void Mole::ChangeState(IMoleState* newState)
 {
